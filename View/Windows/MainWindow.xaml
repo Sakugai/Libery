@@ -1,0 +1,187 @@
+﻿<Window x:Class="Libery.View.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Libery.View.Windows"
+        mc:Ignorable="d"
+        Title="Библиотека" 
+        Height="1000" Width="1600"
+        
+        MinHeight="720" MinWidth="1080"
+        MaxHeight="1400" MaxWidth="1600"
+        
+        WindowStartupLocation="CenterScreen"
+        Loaded="Window_Loaded">
+    
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+            <ColumnDefinition Width="1*" />
+        </Grid.ColumnDefinitions>
+
+        <!--#region Left Column-->
+        <ListBox Name="AuthorsLb" 
+                 SelectionChanged="AuthorsLb_SelectionChanged"
+                 FontSize="20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel.ToolTip>
+                            <ToolTip HasDropShadow="True"
+                                     FontSize="20">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=Age, StringFormat={}Возраст: {0}}"/>
+                                    <TextBlock Text="{Binding Path=BirthDate, StringFormat={}Дата рожения: {0:dd-MMMM-yyyy}, ConverterCulture=ru}"/>
+                                    <TextBlock Text="{Binding Path=DeathDate, StringFormat={}Дата смерти: {0:dd-MMMM-yyyy}, ConverterCulture=ru}"/>
+                                    <TextBlock Text="{Binding Path=BirthPlace, StringFormat={}Место рождения: {0}}"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </StackPanel.ToolTip>
+                        <TextBlock Text="{Binding Name}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--#endregion-->
+
+        <!--#region Center Column-->
+        <ListBox Name="BooksLb"
+                 Grid.Column="1"
+                 SelectionChanged="BooksLb_SelectionChanged"
+                 FontSize="20">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <StackPanel.ToolTip>
+                            <ToolTip>
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Path=PageCount, StringFormat={}Количество страниц: {0}}"/>
+                                    <TextBlock Text="{Binding Path=ReleaseDate, StringFormat={}Дата выпуска: {0:yyyy}}"/>
+                                </StackPanel>
+                            </ToolTip>
+                        </StackPanel.ToolTip>
+                        <TextBlock Text="{Binding Title}"/>
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <!--#endregion-->
+
+        <!--#region Rigth Column-->
+        <Grid Grid.Column="2">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1.4*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            
+            <!--Информация об авторе-->
+            <Grid Name="AuthorsGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Информация об авторе"
+                           FontSize="30" FontWeight="Bold"/>
+
+                <GroupBox Grid.Row="1"
+                          Header="ФИО:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Name}"/>
+                </GroupBox>
+
+                <GroupBox Grid.Row="2"
+                          Header="Возраст:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Age}"/>
+                </GroupBox>
+
+                <GroupBox Grid.Row="3"
+                          Header="Дата рождения:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Path=BirthDate, StringFormat={}{0:dd-MMMM-yyyy}, ConverterCulture=ru}"/>
+                </GroupBox>
+
+                <GroupBox Grid.Row="4"
+                          Header="Дата смерти:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Path=DeathDate, StringFormat={}{0:dd-MMMM-yyyy}, ConverterCulture=ru}"/>
+                </GroupBox>
+                
+                <GroupBox Grid.Row="5"
+                          Header="Место рождения:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding BirthPlace}"/>
+                </GroupBox>
+
+                <!--<GroupBox Grid.Row="6"
+                          Header="Жив ли автор?:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <CheckBox />
+                </GroupBox>-->
+                
+                <StackPanel Grid.Row="8" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Name="AddAuthorsBtn" Content="Добавить" 
+                            FontSize="25" Padding="10"
+                            Margin="0 0 20 0"
+                            Click="AddAuthorsBtn_Click"/>
+                    <Button Name="DeleteAuythorsBtn" Content="Удалить"
+                            FontSize="25" Padding="10"
+                            Click="DeleteAuythorsBtn_Click"/>
+                </StackPanel>
+            </Grid>
+            
+            <!--Информация о книге-->
+            <Grid Grid.Row="1" Name="BooksGrid">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+
+                <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+                           Text="Информация о книге"
+                           FontSize="30" FontWeight="Bold"/>
+
+                <GroupBox Grid.Row="1"
+                          Header="Название:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Title}"/>
+                </GroupBox>
+
+                <GroupBox Grid.Row="2"
+                          Header="Дата выпуска:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding Path=ReleaseDate, StringFormat={}{0:dd-MMMM-yyyy}, ConverterCulture=ru}"/>
+                </GroupBox>
+
+                <GroupBox Grid.Row="3"
+                          Header="Количество страниц:"
+                          FontSize="25" BorderBrush="Transparent">
+                    <TextBox Text="{Binding PageCount}"/>
+                </GroupBox>
+
+                <StackPanel Grid.Row="5" Orientation="Horizontal"
+                            HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <Button Content="Добавить" 
+                            FontSize="25" Padding="10"
+                            Margin="0 0 20 0"/>
+                    <Button Content="Удалить"
+                            FontSize="25" Padding="10"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+        <!--#endregion-->
+    </Grid>
+</Window>
